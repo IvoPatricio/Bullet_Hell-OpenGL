@@ -1,5 +1,5 @@
 # Bullet_Hell-OpenGL
-**Dodge_Restarter**Fast-paced 2D bullet hell experience powered by OpenGL. Players navigate a small, agile character through swarms of enemies, avoiding thousands of bullets flying across the screen.
+**Dodge_Restarter** Fast-paced 2D bullet hell experience using C# with the MonoGame framework, powered by OpenGL and .NET. Players navigate a small, agile character through swarms of enemies, avoiding thousands of bullets flying across the screen.
 
 ## Installation
   ### Prerequisites
@@ -13,5 +13,7 @@
 ## Screenshots
 
 ## Technologies Used
-- C++
-- OpenGL
+- Programming Language: C#
+- Framework: .NET
+- Game Framework: MonoGame
+- Graphics API: OpenGL

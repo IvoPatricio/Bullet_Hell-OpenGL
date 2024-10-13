@@ -1,21 +1,26 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 namespace BulletGame
 {
     public class MainMenu
     {
-        //Start
-        //Settings
-        //Credits
-        //Quit
-        //Help
+        private SpriteFont font;
+        private int selectedIndex;
+        private string[] menuItems = { "Start", "Settings", "Credits", "Quit", "Help"};
     }
     public class PauseMenu
     {
-        //Resume
-        //Settings
-        //Quit
+        private SpriteFont font;
+        private int menuIndex;
+        private string[] menuItems = { "Resume", "Settings", "Main Menu","Quit" };
     }
     public class SettingsMenu
     {
+        private SpriteFont font;
+        private int menuIndex;
+        private string[] menuItems = { "Graphics", "Resolution", "Controls", "Audio" };
         //Graphics
             // Normal / Low-end
         //resolution
@@ -25,14 +30,11 @@ namespace BulletGame
             //Key Rebinder / Mouse sensitivity / Invert Mouse Y-Axis
         //Audio Settings
             //Master Volume / Music Volume / Sound Effects Volume
-        //GamePlay Settings
-            //Difficulty Level
-        // Save/Load Settings
     }
     public class GameOverMenu
     {
-        //Restart
-        //Return Main Menu
-        //Credits
+        private SpriteFont font;
+        private int menuIndex;
+        private string[] menuItems = { "Restart", "Return Main Menu", "Credits","Quit" };
     }
 }

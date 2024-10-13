@@ -13,6 +13,7 @@ namespace BulletGame
         private SpriteBatch _spriteBatch;
         private Player _player;
         private GoldScore _goldScore;
+        private string[] _gameStates = { "Main Menu", "Playing", "Paused", "Quit", "Help", "Settings", "Game Over"};
 
         public Game1()
         {

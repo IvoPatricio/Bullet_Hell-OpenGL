@@ -4,6 +4,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace BulletGame
 {
@@ -13,6 +14,8 @@ namespace BulletGame
         Texture2D _goldCoin;
         Texture2D _textureatlas;
         SpriteFont _font;
+        SpriteFont _mainFont;
+        Song _song;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private MainMenu _mainMenu;
@@ -54,8 +57,8 @@ namespace BulletGame
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            _graphics.PreferredBackBufferWidth = 854;
-            _graphics.PreferredBackBufferHeight = 480;
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 720;
             //_graphics.IsFullScreen = true;
             this.Window.Title = "Dodge Restarter";
             IsMouseVisible = true;
@@ -65,7 +68,6 @@ namespace BulletGame
                 new Rectangle(16, 0, 16, 16)
             };
             _camera = new(Vector2.Zero);
-            _MainMenu = new();
             this._indexGameStates = 0;
         }
 
@@ -84,9 +86,13 @@ namespace BulletGame
             _ballTexture = Content.Load<Texture2D>("ball");
             _goldCoin = Content.Load<Texture2D>("diamant");
             _font = Content.Load<SpriteFont>("defaultFont");
+            _mainFont = Content.Load<SpriteFont>("menuFont");
             _textureatlas = Content.Load<Texture2D>("floorExamples");
+            //_song = Content.Load<Song>("audio");
+            //MediaPlayer.Play(_song);
             _goldScore = new GoldScore(_goldCoin, _font);
             _player = new Player(Vector2.Zero, _ballTexture);
+            _mainMenu = new(_mainFont);
         }
 
         protected override void Update(GameTime gameTime)
@@ -94,7 +100,14 @@ namespace BulletGame
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
-            _player.Update();
+            if (_gameStates[_indexGameStates] == "Main Menu")
+            {
+                _mainMenu.Update();
+            }
+            else
+            {
+                _player.Update();
+            }
             //_camera.Follow(_player, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
             base.Update(gameTime);
         }
@@ -102,13 +115,13 @@ namespace BulletGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            _spriteBatch.Begin();
             if (_gameStates[_indexGameStates] == "Main Menu")
             {
-                _mainMenu.Draw();
+                _mainMenu.Draw(_spriteBatch);
             }
             else
             {
-                _spriteBatch.Begin();
                 _player.Draw(_spriteBatch);
                 _goldScore.Draw(_spriteBatch);
                 //Rectangle dest1 = new Rectangle(0, 0, 64, 64);
@@ -132,8 +145,8 @@ namespace BulletGame
                         Console.WriteLine($"Error: item.Value out of range");
                     }
                 }
-                _spriteBatch.End();
             }
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }

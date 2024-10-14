@@ -7,6 +7,7 @@
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/0.jpg</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/ball.png</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/defaultFont.spritefont</File>
+    <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/MenuFont.spritefont</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/pixil-frame-0 (1).png</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/pixil-frame-0.png</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/transferir (1).png</File>
@@ -15,6 +16,7 @@
     <File>GoldCoin.jpg</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File>menuFont.spritefont</File>
     <File>floorExamples.png</File>
     <File>goldIcon.png</File>
     <File>diamant.png</File>

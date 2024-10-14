@@ -1,28 +1,61 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace BulletGame
 {
     public class MainMenu
     {
         private SpriteFont font;
-        private int selectedIndex;
-        private string[] menuItems = { "Start", "Settings", "Credits", "Quit", "Help"};
+        private int _menuIndex;
+        private string[] _menuItems = { "Start", "Settings", "Credits", "Quit", "Help"};
+        private List<Vector2> _menuPositions = new List<Vector2>();
+        private KeyboardState _previousKeyState;
 
-        public MainMenu()
+        public MainMenu(SpriteFont font)
         {
-            ;
-        }
+            this.font = font;
+            this._menuIndex = 0;
 
+            int startY = (720 - (_menuItems.Length * 40)) / 2;
+            for (int i = 0; i < _menuItems.Length; i++)
+            {
+                string menuItem = _menuItems[i];
+                Vector2 textSize = font.MeasureString(menuItem);
+                float posX = (1280 - textSize.X) / 2;
+                float posY = startY + i * 40;
+                _menuPositions.Add(new Vector2(posX, posY));
+            }
+        }
+        
         public virtual void Update()
         {
-            ;
+            KeyboardState keystate = Keyboard.GetState();
+
+            if (keystate.IsKeyDown(Keys.Up) && _previousKeyState.IsKeyUp(Keys.Up))
+            {
+                _menuIndex--;
+                if (_menuIndex < 0)
+                    _menuIndex = _menuItems.Length - 1;
+            }
+            else if (keystate.IsKeyDown(Keys.Down) && _previousKeyState.IsKeyUp(Keys.Down))
+            {
+                _menuIndex++;
+                if (_menuIndex >= _menuItems.Length)
+                    _menuIndex = 0;
+            }
+            _previousKeyState = keystate;
         }
 
-        public void Draw()
+        
+        public void Draw(SpriteBatch spriteBatch)
         {
-            ;
+            for (int i = 0; i < _menuItems.Length; i++)
+            {
+                spriteBatch.DrawString(font, _menuItems[i], _menuPositions[i], Color.White);
+            }
+            spriteBatch.DrawString(font, _menuItems[_menuIndex], _menuPositions[_menuIndex], Color.Yellow);
         }
     }
     public class PauseMenu

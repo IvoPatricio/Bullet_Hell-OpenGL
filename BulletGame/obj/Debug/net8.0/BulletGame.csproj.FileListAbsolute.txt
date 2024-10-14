@@ -28,8 +28,13 @@ C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\BulletGame.exe
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\BulletGame.dll
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\MonoGame.Framework.dll
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\runtimes\win-x64\native\SDL2.dll
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\0.xnb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\ball.xnb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\defaultFont.xnb
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\diamant.xnb
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\floorExamples.xnb
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\GoldCoin.xnb
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\goldIcon.xnb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\BulletGame.deps.json
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\BulletGame.runtimeconfig.json
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\BulletGame.pdb
@@ -52,7 +57,3 @@ C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\refint\BulletGame
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\BulletGame.pdb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\BulletGame.genruntimeconfig.cache
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\ref\BulletGame.dll
-C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\0.xnb
-C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\GoldCoin.xnb
-C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\goldIcon.xnb
-C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\diamant.xnb

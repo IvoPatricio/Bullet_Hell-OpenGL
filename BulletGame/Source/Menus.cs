@@ -9,6 +9,21 @@ namespace BulletGame
         private SpriteFont font;
         private int selectedIndex;
         private string[] menuItems = { "Start", "Settings", "Credits", "Quit", "Help"};
+
+        public MainMenu()
+        {
+            ;
+        }
+
+        public virtual void Update()
+        {
+            ;
+        }
+
+        public void Draw()
+        {
+            ;
+        }
     }
     public class PauseMenu
     {

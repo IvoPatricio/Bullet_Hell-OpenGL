@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,11 +15,15 @@ namespace BulletGame
         SpriteFont _font;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private MainMenu _mainMenu;
         private Player _player;
         private GoldScore _goldScore;
+        private Camera _camera;
 
         private Dictionary<Vector2, int> _tilemap;
         private List<Rectangle> _textures;
+
+        int _indexGameStates;
         private string[] _gameStates = {"Main Menu", "Playing", "Paused", "Quit", "Help", "Settings", "Game Over"};
 
         private Dictionary<Vector2, int> LoadMap(string filepath)
@@ -54,11 +59,14 @@ namespace BulletGame
             //_graphics.IsFullScreen = true;
             this.Window.Title = "Dodge Restarter";
             IsMouseVisible = true;
-            _tilemap = LoadMap("./maps/map1.csv");
+            _tilemap = LoadMap("../../../maps/map1.csv");
             _textures = new List<Rectangle>() {
                 new Rectangle(0, 0, 16, 16),
                 new Rectangle(16, 0, 16, 16)
             };
+            _camera = new(Vector2.Zero);
+            _MainMenu = new();
+            this._indexGameStates = 0;
         }
 
         protected override void Initialize()
@@ -86,30 +94,46 @@ namespace BulletGame
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
-            
             _player.Update();
+            //_camera.Follow(_player, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
-            //https://www.youtube.com/watch?v=K_I7dZM0zw4   PIXEL ART SHARP
-            _player.Draw(_spriteBatch);
-            _goldScore.Draw(_spriteBatch);
-            foreach (var item in _tilemap)
+            GraphicsDevice.Clear(Color.Black);
+            if (_gameStates[_indexGameStates] == "Main Menu")
             {
-                Rectangle dest = new(
-                    (int)item.Key.X * 64,
-                    (int)item.Key.Y * 64,
-                    64,
-                    64
-                );
-                Rectangle src = _textures[item.Value - 1];
-                _spriteBatch.Draw(_textureatlas, dest, src, Color.White);
+                _mainMenu.Draw();
             }
-            _spriteBatch.End();
+            else
+            {
+                _spriteBatch.Begin();
+                _player.Draw(_spriteBatch);
+                _goldScore.Draw(_spriteBatch);
+                //Rectangle dest1 = new Rectangle(0, 0, 64, 64);
+                //Rectangle src1 = _textures[0];
+                //_spriteBatch.Draw(_textureatlas, dest1, src1, Color.White);
+                foreach (var item in _tilemap)
+                {
+                    Rectangle dest = new(
+                        (int)item.Key.X * 64,
+                        (int)item.Key.Y * 64,
+                        64,
+                        64
+                    );
+                    if (item.Value > 0 && item.Value <= _textures.Count)
+                    {
+                        Rectangle src = _textures[item.Value - 1];
+                        _spriteBatch.Draw(_textureatlas, dest, src, Color.White);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error: item.Value out of range");
+                    }
+                }
+                _spriteBatch.End();
+            }
             base.Draw(gameTime);
         }
     }

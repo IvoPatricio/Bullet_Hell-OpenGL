@@ -54,13 +54,28 @@ namespace BulletGame
         }
 
         
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw_Main_Menu(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < _menuItems.Length; i++)
             {
                 spriteBatch.DrawString(font, _menuItems[i], _menuPositions[i], Color.White);
             }
             spriteBatch.DrawString(font, _menuItems[_menuIndex], _menuPositions[_menuIndex], Color.Yellow);
+        }
+
+        public void Draw_Credits(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(font, "Credits: Ivo Marques", new Vector2(400, 400), Color.Yellow);
+        }
+
+        public void Draw_Help(SpriteBatch spriteBatch)
+        {
+
+        }
+
+        public void Draw_Settings(SpriteBatch spriteBatch)
+        {
+
         }
     }
     public class PauseMenu

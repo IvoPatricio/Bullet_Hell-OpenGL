@@ -119,12 +119,12 @@ namespace BulletGame
             _spriteBatch.Begin();
             if (_indexGameStates == 9)
             {
-                _mainMenu.Draw(_spriteBatch);
+                _mainMenu.Draw_Main_Menu(_spriteBatch);
             }
             else if (_indexGameStates == 1)
                 Exit();
             else if (_indexGameStates == 2)
-                Exit();
+                _mainMenu.Draw_Credits(_spriteBatch);
             else if (_indexGameStates == 3)
                 Exit();
             else if (_indexGameStates == 5)

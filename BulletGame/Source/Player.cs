@@ -11,7 +11,7 @@ namespace BulletGame
 
         public Player(Vector2 startPosition, Texture2D texture)
         {
-            Position = startPosition;
+            this.Position = startPosition;
             this.texture = texture;
         }
 
@@ -21,14 +21,15 @@ namespace BulletGame
             KeyboardState keystate = Keyboard.GetState();
 
             if (keystate.IsKeyDown(Keys.Right))
-                movement.X += 1;
+                movement.X++;
             if (keystate.IsKeyDown(Keys.Left))
-                movement.X -= 1;
+                movement.X--;
             if (keystate.IsKeyDown(Keys.Up))
-                movement.Y -= 1;
+                movement.Y--;
             if (keystate.IsKeyDown(Keys.Down))
-                movement.Y += 1;
-
+                movement.Y++;
+            if (movement != Vector2.Zero)
+                movement.Normalize();
             Position += movement;
         }
 

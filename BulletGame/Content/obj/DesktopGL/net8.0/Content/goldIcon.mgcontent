@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/pixil-frame-0.png</SourceFile>
-  <SourceTime>2024-10-12T16:43:32.1859178+01:00</SourceTime>
+  <SourceTime>2024-10-12T18:25:02.9475009+01:00</SourceTime>
   <DestFile>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/goldIcon.xnb</DestFile>
-  <DestTime>2024-10-12T16:46:10.8976166+01:00</DestTime>
+  <DestTime>2024-10-13T15:06:11.6810836+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T18:05:56+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

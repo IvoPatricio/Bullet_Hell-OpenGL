@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/defaultFont.spritefont</SourceFile>
-  <SourceTime>2024-10-12T16:10:23.3259667+01:00</SourceTime>
+  <SourceTime>2024-10-12T18:25:02.8885008+01:00</SourceTime>
   <DestFile>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/defaultFont.xnb</DestFile>
-  <DestTime>2024-10-12T16:10:31.1228182+01:00</DestTime>
+  <DestTime>2024-10-13T15:06:11.6710864+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2024-08-16T18:05:56+01:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

@@ -1,6 +1,6 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/0.jpg","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/GoldCoin.xnb","TextureProcessor","Texture2DContent",115813,4194389,0.2723975
+"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/0.jpg","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/GoldCoin.xnb","TextureProcessor","Texture2DContent",115813,4194389,0.4459792
 "C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/ball.png","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",8368,16469,0.124151
-"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/defaultFont.spritefont","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/defaultFont.xnb","FontDescriptionProcessor","SpriteFontContent",2065,21538,0.1835693
-"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/pixil-frame-0.png","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/goldIcon.xnb","TextureProcessor","Texture2DContent",174,341,0.1195265
-"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/transferir (1).png","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/diamant.xnb","TextureProcessor","Texture2DContent",504,1109,0.1355308
+"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/defaultFont.spritefont","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/defaultFont.xnb","FontDescriptionProcessor","SpriteFontContent",2065,21538,0.1411589
+"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/pixil-frame-0.png","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/goldIcon.xnb","TextureProcessor","Texture2DContent",174,341,0.0066484
+"C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/transferir (1).png","C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/diamant.xnb","TextureProcessor","Texture2DContent",504,1109,0.0040886

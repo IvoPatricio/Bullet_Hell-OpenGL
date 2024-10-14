@@ -10,6 +10,7 @@ namespace BulletGame
     {
         Texture2D _ballTexture;
         Texture2D _goldCoin;
+        Texture2D _textureatlas;
         SpriteFont _font;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -18,7 +19,7 @@ namespace BulletGame
 
         private Dictionary<Vector2, int> _tilemap;
         private List<Rectangle> _textures;
-        private string[] _gameStates = { "Main Menu", "Playing", "Paused", "Quit", "Help", "Settings", "Game Over"};
+        private string[] _gameStates = {"Main Menu", "Playing", "Paused", "Quit", "Help", "Settings", "Game Over"};
 
         private Dictionary<Vector2, int> LoadMap(string filepath)
         {
@@ -39,6 +40,7 @@ namespace BulletGame
                         }
                     }
                 }
+                y++;
             }
             return result;
         }
@@ -53,10 +55,10 @@ namespace BulletGame
             this.Window.Title = "Dodge Restarter";
             IsMouseVisible = true;
             _tilemap = LoadMap("./maps/map1.csv");
-            _textures = new()
-            {
-                new Rectangle()
-            }
+            _textures = new List<Rectangle>() {
+                new Rectangle(0, 0, 16, 16),
+                new Rectangle(16, 0, 16, 16)
+            };
         }
 
         protected override void Initialize()
@@ -74,6 +76,7 @@ namespace BulletGame
             _ballTexture = Content.Load<Texture2D>("ball");
             _goldCoin = Content.Load<Texture2D>("diamant");
             _font = Content.Load<SpriteFont>("defaultFont");
+            _textureatlas = Content.Load<Texture2D>("floorExamples");
             _goldScore = new GoldScore(_goldCoin, _font);
             _player = new Player(Vector2.Zero, _ballTexture);
         }
@@ -95,6 +98,17 @@ namespace BulletGame
             //https://www.youtube.com/watch?v=K_I7dZM0zw4   PIXEL ART SHARP
             _player.Draw(_spriteBatch);
             _goldScore.Draw(_spriteBatch);
+            foreach (var item in _tilemap)
+            {
+                Rectangle dest = new(
+                    (int)item.Key.X * 64,
+                    (int)item.Key.Y * 64,
+                    64,
+                    64
+                );
+                Rectangle src = _textures[item.Value - 1];
+                _spriteBatch.Draw(_textureatlas, dest, src, Color.White);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }

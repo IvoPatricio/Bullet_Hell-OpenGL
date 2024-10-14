@@ -27,7 +27,6 @@ namespace BulletGame
         private List<Rectangle> _textures;
 
         int _indexGameStates;
-        private string[] _gameStates = {"Main Menu", "Playing", "Paused", "Quit", "Help", "Settings", "Game Over"};
 
         private Dictionary<Vector2, int> LoadMap(string filepath)
         {
@@ -68,7 +67,7 @@ namespace BulletGame
                 new Rectangle(16, 0, 16, 16)
             };
             _camera = new(Vector2.Zero);
-            this._indexGameStates = 0;
+            this._indexGameStates = 9;
         }
 
         protected override void Initialize()
@@ -100,13 +99,15 @@ namespace BulletGame
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
-            if (_gameStates[_indexGameStates] == "Main Menu")
+            if (_indexGameStates == 9)
             {
-                _mainMenu.Update();
+                _indexGameStates = _mainMenu.Update();
             }
-            else
-            {
+            if (_indexGameStates == 0){
                 _player.Update();
+            }
+            else if (_indexGameStates == 3){
+                Exit();
             }
             //_camera.Follow(_player, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
             base.Update(gameTime);
@@ -116,11 +117,19 @@ namespace BulletGame
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
-            if (_gameStates[_indexGameStates] == "Main Menu")
+            if (_indexGameStates == 9)
             {
                 _mainMenu.Draw(_spriteBatch);
             }
-            else
+            else if (_indexGameStates == 1)
+                Exit();
+            else if (_indexGameStates == 2)
+                Exit();
+            else if (_indexGameStates == 3)
+                Exit();
+            else if (_indexGameStates == 5)
+                Exit();
+            else if (_indexGameStates == 0)
             {
                 _player.Draw(_spriteBatch);
                 _goldScore.Draw(_spriteBatch);

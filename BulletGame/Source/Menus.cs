@@ -9,7 +9,7 @@ namespace BulletGame
     {
         private SpriteFont font;
         private int _menuIndex;
-        private string[] _menuItems = { "Start", "Settings", "Credits", "Quit", "Help"};
+        private string[] _menuItems = {"Start", "Settings", "Credits", "Quit", "Help"};
         private List<Vector2> _menuPositions = new List<Vector2>();
         private KeyboardState _previousKeyState;
 
@@ -29,7 +29,7 @@ namespace BulletGame
             }
         }
         
-        public virtual void Update()
+        public virtual int Update()
         {
             KeyboardState keystate = Keyboard.GetState();
 
@@ -45,7 +45,12 @@ namespace BulletGame
                 if (_menuIndex >= _menuItems.Length)
                     _menuIndex = 0;
             }
+            else if (keystate.IsKeyDown(Keys.Enter) && _previousKeyState.IsKeyUp(Keys.Enter))
+            {
+                return _menuIndex;
+            }
             _previousKeyState = keystate;
+            return 9;
         }
 
         

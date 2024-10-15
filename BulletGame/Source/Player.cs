@@ -21,13 +21,13 @@ namespace BulletGame
             KeyboardState keystate = Keyboard.GetState();
 
             if (keystate.IsKeyDown(Keys.Right))
-                movement.X++;
+                movement.X += 25;
             if (keystate.IsKeyDown(Keys.Left))
-                movement.X--;
+                movement.X -= 25;
             if (keystate.IsKeyDown(Keys.Up))
-                movement.Y--;
+                movement.Y -= 25;
             if (keystate.IsKeyDown(Keys.Down))
-                movement.Y++;
+                movement.Y +=25;
             if (movement != Vector2.Zero)
                 movement.Normalize();
             Position += movement;

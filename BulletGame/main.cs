@@ -12,6 +12,7 @@ namespace BulletGame
     {
         Texture2D _ballTexture;
         Texture2D _goldCoin;
+        Texture2D _backgroundTexture;
         Texture2D _textureatlas;
         SpriteFont _font;
         SpriteFont _mainFont;
@@ -26,7 +27,7 @@ namespace BulletGame
         private Dictionary<Vector2, int> _tilemap;
         private List<Rectangle> _textures;
 
-        int _indexGameStates;
+        string _GameState;
 
         private Dictionary<Vector2, int> LoadMap(string filepath)
         {
@@ -67,7 +68,7 @@ namespace BulletGame
                 new Rectangle(16, 0, 16, 16)
             };
             _camera = new(Vector2.Zero);
-            this._indexGameStates = 9;
+            this._GameState = "Main Menu";
         }
 
         protected override void Initialize()
@@ -84,6 +85,7 @@ namespace BulletGame
             // TODO: use this.Content to load your game content here
             _ballTexture = Content.Load<Texture2D>("ball");
             _goldCoin = Content.Load<Texture2D>("diamant");
+            _backgroundTexture = Content.Load<Texture2D>("MainMenu_BackGround");
             _font = Content.Load<SpriteFont>("defaultFont");
             _mainFont = Content.Load<SpriteFont>("menuFont");
             _textureatlas = Content.Load<Texture2D>("floorExamples");
@@ -96,17 +98,26 @@ namespace BulletGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             // TODO: Add your update logic here
-            if (_indexGameStates == 9)
+            if (_GameState == "Main Menu")
             {
-                _indexGameStates = _mainMenu.Update();
+                _GameState = _mainMenu.Update();
             }
-            if (_indexGameStates == 0){
+            else if (_GameState == "Start"){
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
                 _player.Update();
             }
-            else if (_indexGameStates == 3){
+            else if (_GameState == "Settings"){
+                Exit();
+            }
+            else if (_GameState == "Credits"){
+                _GameState= _mainMenu.Update_Credits();
+            }
+            else if (_GameState == "Quit"){
+                Exit();
+            }
+            else if (_GameState == "Help"){
                 Exit();
             }
             //_camera.Follow(_player, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
@@ -117,19 +128,21 @@ namespace BulletGame
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
-            if (_indexGameStates == 9)
+            if (_GameState == "Main Menu")
             {
+                Rectangle destinationRectangle = new Rectangle(0, 0, 1280, 720);
+                _spriteBatch.Draw(_backgroundTexture, destinationRectangle, Color.White);
                 _mainMenu.Draw_Main_Menu(_spriteBatch);
             }
-            else if (_indexGameStates == 1)
+            else if (_GameState == "Settings")
                 Exit();
-            else if (_indexGameStates == 2)
+            else if (_GameState == "Credits")
                 _mainMenu.Draw_Credits(_spriteBatch);
-            else if (_indexGameStates == 3)
+            else if (_GameState == "Quit")
                 Exit();
-            else if (_indexGameStates == 5)
+            else if (_GameState == "Help")
                 Exit();
-            else if (_indexGameStates == 0)
+            else if (_GameState == "Start")
             {
                 _player.Draw(_spriteBatch);
                 _goldScore.Draw(_spriteBatch);

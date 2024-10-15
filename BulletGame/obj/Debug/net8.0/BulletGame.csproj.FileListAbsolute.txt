@@ -58,3 +58,4 @@ C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\BulletGame.pdb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\BulletGame.genruntimeconfig.cache
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\obj\Debug\net8.0\ref\BulletGame.dll
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\menuFont.xnb
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\MainMenu_BackGround.xnb

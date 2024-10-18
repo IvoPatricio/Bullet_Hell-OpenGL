@@ -22,23 +22,23 @@ namespace BulletGame
         public virtual void LoadContent(ContentManager content)
         {
             _playerTexture2D = content.Load<Texture2D>("playerArtFront");
-            _playerTexture2D.Filter = TextureFilter.Point;
         }
-        public virtual Vector2 Update()
+        public virtual Vector2 Update(GameTime gameTime)
         {
             Vector2 movement = Vector2.Zero;
             KeyboardState keystate = Keyboard.GetState();
 
             if (keystate.IsKeyDown(Keys.Right))
-                movement.X += 5;
+                movement.X += 1;
             if (keystate.IsKeyDown(Keys.Left))
-                movement.X -= 5;
+                movement.X -= 1;
             if (keystate.IsKeyDown(Keys.Up))
-                movement.Y -= 5;
+                movement.Y -= 1;
             if (keystate.IsKeyDown(Keys.Down))
-                movement.Y += 5;
+                movement.Y += 1;
             if (movement != Vector2.Zero)
                 movement.Normalize();
+            movement *= 5;
             Position += movement;
             return Position;
         }

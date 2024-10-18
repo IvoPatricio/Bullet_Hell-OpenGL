@@ -96,6 +96,7 @@ namespace BulletGame
 
         public void Draw_Main_Menu(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             Rectangle destRectangle = new Rectangle(0, 0, 1280, 720);
             spriteBatch.Draw(_MainBackgroundTexture2D, destRectangle, Color.White);
             for (int i = 0; i < _menuItems.Length; i++)
@@ -103,6 +104,7 @@ namespace BulletGame
                 spriteBatch.DrawString(_font, _menuItems[i], _menuPositions[i], Color.White);
             }
             spriteBatch.DrawString(_font, _menuItems[_menuIndex], _menuPositions[_menuIndex], Color.Yellow);
+            spriteBatch.End();
         }
 
         public String Update_Credits()
@@ -117,7 +119,9 @@ namespace BulletGame
         }
         public void Draw_Credits(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_font, "Credits: Ivo Marques", new Vector2(400, 400), Color.Yellow);
+            spriteBatch.Begin();
+            spriteBatch.DrawString(_font, "Credits!", new Vector2(400, 400), Color.Yellow);
+            spriteBatch.End();
         }
 
         public void Draw_Help(SpriteBatch spriteBatch)
@@ -127,7 +131,10 @@ namespace BulletGame
 
         public void Draw_Settings(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Begin();
+            Rectangle destRectangle = new Rectangle(0, 0, 1280, 720);
+            spriteBatch.Draw(_PauseBackgroundTexture2D, destRectangle, Color.White);
+            spriteBatch.End();
         }
     }
     

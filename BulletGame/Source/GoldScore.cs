@@ -31,8 +31,10 @@ namespace BulletGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_goldCoinTexture2D, new Microsoft.Xna.Framework.Vector2(0, 0), Color.Yellow);
-            spriteBatch.DrawString(_fontSpriteFont, "Gold", new Microsoft.Xna.Framework.Vector2(20, 0), Color.Yellow);
+            Vector2 goldPosition = new Vector2(10, 10);
+            spriteBatch.Draw(_goldCoinTexture2D, goldPosition, Color.Yellow);
+            Vector2 textPosition = new Vector2(goldPosition.X + 30, goldPosition.Y);
+            spriteBatch.DrawString(_fontSpriteFont, "Gold", textPosition, Color.Yellow);
         }
     }
 }

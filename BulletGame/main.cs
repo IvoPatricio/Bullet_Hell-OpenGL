@@ -105,11 +105,11 @@ namespace BulletGame
             else if (_GameState == "Start"){
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
-                _playerPosition = _player.Update();
+                _playerPosition = _player.Update(gameTime);
                 _camera.Follow(_playerPosition, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             }
             else if (_GameState == "Settings"){
-                Exit();
+                ;
             }
             else if (_GameState == "Credits"){
                 _GameState= _mainMenu.Update_Credits();
@@ -126,22 +126,25 @@ namespace BulletGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            //_spriteBatch.Begin();
-            _spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.position, 0)));
             if (_GameState == "Main Menu")
             {
                 _mainMenu.Draw_Main_Menu(_spriteBatch);
             }
             else if (_GameState == "Settings")
-                Exit();
+                _mainMenu.Draw_Settings(_spriteBatch);
             else if (_GameState == "Credits")
+            {
                 _mainMenu.Draw_Credits(_spriteBatch);
+            }
             else if (_GameState == "Quit")
                 Exit();
             else if (_GameState == "Help")
                 Exit();
             else if (_GameState == "Start")
             {
+                _spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, 
+                SamplerState.PointClamp, null, null,
+                    transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.position, 0)));
                 //Rectangle dest1 = new Rectangle(0, 0, 64, 64);
                 //Rectangle src1 = _textures[0];
                 //_spriteBatch.Draw(_textureatlas, dest1, src1, Color.White);
@@ -160,9 +163,12 @@ namespace BulletGame
                     }
                 }
                 _player.Draw(_spriteBatch);
+                _spriteBatch.End();
+                //UI elements
+                _spriteBatch.Begin();
                 _goldScore.Draw(_spriteBatch);
+                _spriteBatch.End();
             }
-            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }

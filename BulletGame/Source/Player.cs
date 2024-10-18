@@ -22,8 +22,9 @@ namespace BulletGame
         public virtual void LoadContent(ContentManager content)
         {
             _playerTexture2D = content.Load<Texture2D>("playerArtFront");
+            _playerTexture2D.Filter = TextureFilter.Point;
         }
-        public virtual void Update()
+        public virtual Vector2 Update()
         {
             Vector2 movement = Vector2.Zero;
             KeyboardState keystate = Keyboard.GetState();
@@ -39,6 +40,7 @@ namespace BulletGame
             if (movement != Vector2.Zero)
                 movement.Normalize();
             Position += movement;
+            return Position;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -54,7 +56,7 @@ namespace BulletGame
         }
     }
 
-    public class Warrior : Player
+/*    public class Warrior : Player
     {
         public int Health { get; private set; }
         private Texture2D _textureClass;
@@ -64,7 +66,7 @@ namespace BulletGame
             this.Health = 150;
         }
 
-        public override void Update()
+        public override Vector2 Update()
         {
             base.Update();
         }
@@ -80,7 +82,7 @@ namespace BulletGame
             this.Health = 100;
         }
 
-        public override void Update()
+        public override Vector2 Update()
         {
             base.Update();
         }
@@ -97,9 +99,9 @@ namespace BulletGame
             this.Health = 80;
         }
 
-        public override void Update()
+        public override Vector2 Update()
         {
             base.Update();
         }
-    }
+    }*/
 }

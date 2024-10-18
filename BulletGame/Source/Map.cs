@@ -18,10 +18,7 @@ namespace BulletGame
 
         public Map()
         {
-            /*_tiles = new Sprite [_mapTileSize.X, _mapTileSize.Y];
-            List<Texture2D> textures = new(5);
-            for (int i = 1; i < 6; i++)
-                textures.Add()*/
+            
         }
 
         public virtual void Update()

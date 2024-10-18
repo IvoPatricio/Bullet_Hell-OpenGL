@@ -20,6 +20,7 @@ namespace BulletGame
         private Player _player;
         private GoldScore _goldScore;
         private Camera _camera;
+        private Vector2 _playerPosition;
 
         private Dictionary<Vector2, int> _tilemap;
         private List<Rectangle> _textures;
@@ -58,13 +59,13 @@ namespace BulletGame
             _graphics.PreferredBackBufferHeight = 720;
             //_graphics.IsFullScreen = true;
             this.Window.Title = "Dodge Restarter";
+            this._playerPosition = Vector2.Zero;
             IsMouseVisible = true;
             _tilemap = LoadMap("../../../maps/map1.csv");
             _textures = new List<Rectangle>() {
                 new Rectangle(0, 0, 16, 16),
                 new Rectangle(16, 0, 16, 16)
             };
-            _camera = new(Vector2.Zero);
         }
 
         protected override void Initialize()
@@ -75,7 +76,8 @@ namespace BulletGame
             _menuManager = new MenuManager();
             _mainMenu = new();
             _goldScore = new GoldScore();
-            _player = new Player(Vector2.Zero);
+            _player = new Player(_playerPosition);
+            _camera = new(_playerPosition);
             base.Initialize();
         }
 
@@ -103,7 +105,8 @@ namespace BulletGame
             else if (_GameState == "Start"){
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
-                _player.Update();
+                _playerPosition = _player.Update();
+                _camera.Follow(_playerPosition, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             }
             else if (_GameState == "Settings"){
                 Exit();
@@ -117,14 +120,14 @@ namespace BulletGame
             else if (_GameState == "Help"){
                 Exit();
             }
-            //_camera.Follow(_player, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin();
+            //_spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.position, 0)));
             if (_GameState == "Main Menu")
             {
                 _mainMenu.Draw_Main_Menu(_spriteBatch);
@@ -154,10 +157,6 @@ namespace BulletGame
                     {
                         Rectangle src = _textures[item.Value - 1];
                         _spriteBatch.Draw(_textureatlas, dest, src, Color.White);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Error: item.Value out of range");
                     }
                 }
                 _player.Draw(_spriteBatch);

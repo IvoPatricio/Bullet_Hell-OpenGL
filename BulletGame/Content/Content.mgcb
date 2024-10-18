@@ -44,7 +44,7 @@
 /processorParam:TextureFormat=Compressed
 /build:defaultFont.spritefont
 
-#begin fotor-ai-20241015131540.jpg
+#begin MainBackGround.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,7 +54,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:fotor-ai-20241015131540.jpg;MainMenu_BackGround.jpg
+/build:MainBackGround.jpeg;MainBackground.jpeg
 
 #begin MenuFont.spritefont
 /importer:FontDescriptionImporter
@@ -62,6 +62,30 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:MenuFont.spritefont;menuFont.spritefont
+
+#begin PauseBackGround.jpeg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PauseBackGround.jpeg;PauseBackground.jpeg
+
+#begin pixel_art_player.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:pixel_art_player.png;playerArtFront.png
 
 #begin pixil-frame-0 (1).png
 /importer:TextureImporter

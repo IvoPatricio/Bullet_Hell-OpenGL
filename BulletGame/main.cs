@@ -5,20 +5,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 
 namespace BulletGame
 {
     public class Game1 : Game
     {
-        Texture2D _ballTexture;
-        Texture2D _goldCoin;
-        Texture2D _backgroundTexture;
         Texture2D _textureatlas;
-        SpriteFont _font;
-        SpriteFont _mainFont;
         Song _song;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private MenuManager _menuManager;
         private MainMenu _mainMenu;
         private Player _player;
         private GoldScore _goldScore;
@@ -68,13 +65,17 @@ namespace BulletGame
                 new Rectangle(16, 0, 16, 16)
             };
             _camera = new(Vector2.Zero);
-            this._GameState = "Main Menu";
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             _graphics.ApplyChanges();
+            this._GameState = "Main Menu";
+            _menuManager = new MenuManager();
+            _mainMenu = new();
+            _goldScore = new GoldScore();
+            _player = new Player(Vector2.Zero);
             base.Initialize();
         }
 
@@ -83,17 +84,13 @@ namespace BulletGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            _ballTexture = Content.Load<Texture2D>("ball");
-            _goldCoin = Content.Load<Texture2D>("diamant");
-            _backgroundTexture = Content.Load<Texture2D>("MainMenu_BackGround");
-            _font = Content.Load<SpriteFont>("defaultFont");
-            _mainFont = Content.Load<SpriteFont>("menuFont");
             _textureatlas = Content.Load<Texture2D>("floorExamples");
             //_song = Content.Load<Song>("audio");
             //MediaPlayer.Play(_song);
-            _goldScore = new GoldScore(_goldCoin, _font);
-            _player = new Player(Vector2.Zero, _ballTexture);
-            _mainMenu = new(_mainFont);
+            _player.LoadContent(Content);
+            _menuManager.LoadContent(Content);
+            _mainMenu.LoadContent(Content);
+            _goldScore.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -130,8 +127,6 @@ namespace BulletGame
             _spriteBatch.Begin();
             if (_GameState == "Main Menu")
             {
-                Rectangle destinationRectangle = new Rectangle(0, 0, 1280, 720);
-                _spriteBatch.Draw(_backgroundTexture, destinationRectangle, Color.White);
                 _mainMenu.Draw_Main_Menu(_spriteBatch);
             }
             else if (_GameState == "Settings")
@@ -144,8 +139,6 @@ namespace BulletGame
                 Exit();
             else if (_GameState == "Start")
             {
-                _player.Draw(_spriteBatch);
-                _goldScore.Draw(_spriteBatch);
                 //Rectangle dest1 = new Rectangle(0, 0, 64, 64);
                 //Rectangle src1 = _textures[0];
                 //_spriteBatch.Draw(_textureatlas, dest1, src1, Color.White);
@@ -167,6 +160,8 @@ namespace BulletGame
                         Console.WriteLine($"Error: item.Value out of range");
                     }
                 }
+                _player.Draw(_spriteBatch);
+                _goldScore.Draw(_spriteBatch);
             }
             _spriteBatch.End();
             base.Draw(gameTime);

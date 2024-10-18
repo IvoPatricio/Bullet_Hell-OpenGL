@@ -1,33 +1,41 @@
+using System.Collections.Generic;
+using System.IO;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 
 namespace BulletGame
 {
     public class Player
     {
         public Vector2 Position { get; private set; }
-        private Texture2D texture;
+        private Texture2D _playerTexture2D;
 
-        public Player(Vector2 startPosition, Texture2D texture)
+        public Player(Vector2 startPosition)
         {
             this.Position = startPosition;
-            this.texture = texture;
         }
 
+        public virtual void LoadContent(ContentManager content)
+        {
+            _playerTexture2D = content.Load<Texture2D>("playerArtFront");
+        }
         public virtual void Update()
         {
             Vector2 movement = Vector2.Zero;
             KeyboardState keystate = Keyboard.GetState();
 
             if (keystate.IsKeyDown(Keys.Right))
-                movement.X += 25;
+                movement.X += 5;
             if (keystate.IsKeyDown(Keys.Left))
-                movement.X -= 25;
+                movement.X -= 5;
             if (keystate.IsKeyDown(Keys.Up))
-                movement.Y -= 25;
+                movement.Y -= 5;
             if (keystate.IsKeyDown(Keys.Down))
-                movement.Y +=25;
+                movement.Y += 5;
             if (movement != Vector2.Zero)
                 movement.Normalize();
             Position += movement;
@@ -35,7 +43,14 @@ namespace BulletGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, Color.White);
+            Rectangle dest = new(
+                        (int)Position.X,
+                        (int)Position.Y,
+                        64,
+                        64
+                    );
+            Rectangle src = new Rectangle(0, 0, 32, 32);
+            spriteBatch.Draw(_playerTexture2D, dest, src, Color.White);
         }
     }
 
@@ -44,7 +59,7 @@ namespace BulletGame
         public int Health { get; private set; }
         private Texture2D _textureClass;
 
-        public Warrior(Vector2 startPosition, Texture2D texture) : base(startPosition, texture)
+        public Warrior(Vector2 startPosition, Texture2D texture) : base(startPosition)
         {
             this.Health = 150;
         }
@@ -60,7 +75,7 @@ namespace BulletGame
         public int Health { get; private set; }
         private Texture2D _textureClass;
 
-        public Archer(Vector2 startPosition, Texture2D texture) : base(startPosition, texture)
+        public Archer(Vector2 startPosition, Texture2D texture) : base(startPosition)
         {
             this.Health = 100;
         }
@@ -77,7 +92,7 @@ namespace BulletGame
         private Texture2D _textureClass;
 
         public Wizard(Vector2 startPosition, Texture2D texture)
-            : base(startPosition, texture)
+            : base(startPosition)
         {
             this.Health = 80;
         }

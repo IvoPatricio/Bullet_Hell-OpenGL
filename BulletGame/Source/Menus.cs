@@ -1,38 +1,77 @@
+using System.Collections.Generic;
+using System.IO;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 
 namespace BulletGame
 {
-    public class MainMenu
+    public class MenuManager
     {
-        private SpriteFont font;
-        private int _menuIndex;
+        protected Texture2D _MainBackgroundTexture2D;
+        protected Texture2D _PauseBackgroundTexture2D;
+        protected SpriteFont _font;
+        protected KeyboardState _previousKeyState;
+        protected MouseState _previousMouseState;
+        protected int _menuIndex;
+
+        public virtual void LoadContent(ContentManager content)
+        {
+            _MainBackgroundTexture2D = content.Load<Texture2D>("MainBackground");
+            _PauseBackgroundTexture2D = content.Load<Texture2D>("PauseBackground");
+            _font = content.Load<SpriteFont>("menuFont");
+            _menuIndex = 0;
+        }
+    }
+    public class MainMenu : MenuManager
+    {
         private string[] _menuItems = {"Start", "Settings", "Credits", "Quit", "Help"};
         private List<Vector2> _menuPositions = new List<Vector2>();
-        private KeyboardState _previousKeyState;
 
-        public MainMenu(SpriteFont font)
+        public MainMenu()
         {
-            this.font = font;
-            this._menuIndex = 0;
-
+            ;
+        }
+        ~MainMenu()
+        {
+            ;
+        }
+        public override void LoadContent(ContentManager content)
+        {
+            base.LoadContent(content);
             int startY = (720 - (_menuItems.Length * 40)) / 2;
             for (int i = 0; i < _menuItems.Length; i++)
             {
                 string menuItem = _menuItems[i];
-                Vector2 textSize = font.MeasureString(menuItem);
+                Vector2 textSize = _font.MeasureString(menuItem);
                 float posX = (1280 - textSize.X) / 2;
                 float posY = startY + i * 40;
                 _menuPositions.Add(new Vector2(posX, posY));
             }
         }
         
-        public virtual string Update()
+        public string Update()
         {
             KeyboardState keystate = Keyboard.GetState();
+            MouseState mousestate = Mouse.GetState();
+
+            for (int i = 0; i < _menuItems.Length; i++)
+            {
+                if (mousestate.X >= _menuPositions[i].X &&
+                    mousestate.X <= _menuPositions[i].X + _font.MeasureString(_menuItems[i]).X &&
+                    mousestate.Y >= _menuPositions[i].Y &&
+                    mousestate.Y <= _menuPositions[i].Y + _font.MeasureString(_menuItems[i]).Y)
+                {
+                    _menuIndex = i;
+                    if (mousestate.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
+                    {
+                        return _menuItems[_menuIndex];
+                    }
+                }
+            }
 
             if (keystate.IsKeyDown(Keys.Up) && _previousKeyState.IsKeyUp(Keys.Up))
             {
@@ -51,19 +90,22 @@ namespace BulletGame
                 return _menuItems[_menuIndex];
             }
             _previousKeyState = keystate;
+            _previousMouseState = mousestate;
             return "Main Menu";
         }
 
         public void Draw_Main_Menu(SpriteBatch spriteBatch)
         {
+            Rectangle destRectangle = new Rectangle(0, 0, 1280, 720);
+            spriteBatch.Draw(_MainBackgroundTexture2D, destRectangle, Color.White);
             for (int i = 0; i < _menuItems.Length; i++)
             {
-                spriteBatch.DrawString(font, _menuItems[i], _menuPositions[i], Color.White);
+                spriteBatch.DrawString(_font, _menuItems[i], _menuPositions[i], Color.White);
             }
-            spriteBatch.DrawString(font, _menuItems[_menuIndex], _menuPositions[_menuIndex], Color.Yellow);
+            spriteBatch.DrawString(_font, _menuItems[_menuIndex], _menuPositions[_menuIndex], Color.Yellow);
         }
 
-        public virtual String Update_Credits()
+        public String Update_Credits()
         {
             KeyboardState keystate = Keyboard.GetState();
 
@@ -75,7 +117,7 @@ namespace BulletGame
         }
         public void Draw_Credits(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, "Credits: Ivo Marques", new Vector2(400, 400), Color.Yellow);
+            spriteBatch.DrawString(_font, "Credits: Ivo Marques", new Vector2(400, 400), Color.Yellow);
         }
 
         public void Draw_Help(SpriteBatch spriteBatch)
@@ -89,13 +131,13 @@ namespace BulletGame
         }
     }
     
-    public class PauseMenu
+    public class PauseMenu : MenuManager
     {
         private SpriteFont font;
         private int menuIndex;
         private string[] menuItems = { "Resume", "Settings", "Main Menu","Quit" };
     }
-    public class SettingsMenu
+    public class SettingsMenu : MenuManager
     {
         private SpriteFont font;
         private int menuIndex;
@@ -110,9 +152,8 @@ namespace BulletGame
         //Audio Settings
             //Master Volume / Music Volume / Sound Effects Volume
     }
-    public class GameOverMenu
+    public class GameOverMenu : MenuManager
     {
-        private SpriteFont font;
         private int menuIndex;
         private string[] menuItems = { "Restart", "Return Main Menu", "Credits","Quit" };
     }

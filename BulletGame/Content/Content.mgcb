@@ -44,6 +44,18 @@
 /processorParam:TextureFormat=Compressed
 /build:defaultFont.spritefont
 
+#begin Idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Idle.png;PlayerIdleSheat.png
+
 #begin MainBackGround.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -122,4 +134,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:transferir (1).png;diamant.png
+
+#begin Walk.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Walk.png;PlayerWalkSheat.png
 

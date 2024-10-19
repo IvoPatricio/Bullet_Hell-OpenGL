@@ -20,6 +20,7 @@ namespace BulletGame
         private Player _player;
         private GoldScore _goldScore;
         private Camera _camera;
+        private Sprites _sprites;
         private Vector2 _playerPosition;
 
         private Dictionary<Vector2, int> _tilemap;
@@ -73,10 +74,11 @@ namespace BulletGame
             // TODO: Add your initialization logic here
             _graphics.ApplyChanges();
             this._GameState = "Main Menu";
+            _sprites = new Sprites();
             _menuManager = new MenuManager();
             _mainMenu = new();
             _goldScore = new GoldScore();
-            _player = new Player(_playerPosition);
+            _player = new Player(_playerPosition, _sprites);
             _camera = new(_playerPosition);
             base.Initialize();
         }
@@ -142,20 +144,11 @@ namespace BulletGame
                 Exit();
             else if (_GameState == "Start")
             {
-                _spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, 
-                SamplerState.PointClamp, null, null,
+                _spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null,
                     transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.position, 0)));
-                //Rectangle dest1 = new Rectangle(0, 0, 64, 64);
-                //Rectangle src1 = _textures[0];
-                //_spriteBatch.Draw(_textureatlas, dest1, src1, Color.White);
                 foreach (var item in _tilemap)
                 {
-                    Rectangle dest = new(
-                        (int)item.Key.X * 64,
-                        (int)item.Key.Y * 64,
-                        64,
-                        64
-                    );
+                    Rectangle dest = new((int)item.Key.X * 64, (int)item.Key.Y * 64, 64, 64);
                     if (item.Value > 0 && item.Value <= _textures.Count)
                     {
                         Rectangle src = _textures[item.Value - 1];

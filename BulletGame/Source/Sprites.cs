@@ -9,22 +9,16 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BulletGame
 {
-    public class Sprite
+    public class Sprites
     {
-        private readonly Texture2D _texture;
-        public Vector2 Position { get; private set;}
-        public Vector2 Origin { get ; private set;}
-
-        public Sprite (Texture2D texture, Vector2 position)
-        {
-            _texture = texture;
-            Position = position;
-            Origin = new(_texture.Width/2, _texture.Height/2);
-        }
-        public void Draw()
+        public Sprites ()
         {
 
         }
-
+        public void Draw(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Rectangle src, int scale)
+        {
+            Rectangle dest = new((int)position.X * scale, (int)position.Y * scale, 64, 64);
+            spriteBatch.Draw(texture, dest, src, Color.White);
+        }
     }
 }

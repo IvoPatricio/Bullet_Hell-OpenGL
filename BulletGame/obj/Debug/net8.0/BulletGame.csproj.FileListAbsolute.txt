@@ -64,3 +64,4 @@ C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\playerArt
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\PlayerSheat.xnb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\PlayerIdleSheat.xnb
 C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\PlayerWalkSheat.xnb
+C:\Users\ivopa\Desktop\bullet_game\BulletGame\bin\Debug\net8.0\Content\GroundTextures-Sheet.xnb

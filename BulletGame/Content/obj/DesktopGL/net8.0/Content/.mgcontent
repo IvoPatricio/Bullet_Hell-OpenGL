@@ -7,6 +7,7 @@
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/0.jpg</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/ball.png</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/defaultFont.spritefont</File>
+    <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/GroundTextures-Sheet.png</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/Idle.png</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/MainBackGround.jpeg</File>
     <File>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/MenuFont.spritefont</File>
@@ -19,6 +20,7 @@
   </SourceFiles>
   <DestFiles>
     <File>GoldCoin.jpg</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>PlayerIdleSheat.png</File>

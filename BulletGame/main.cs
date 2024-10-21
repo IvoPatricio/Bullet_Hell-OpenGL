@@ -22,6 +22,8 @@ namespace BulletGame
         private Camera _camera;
         private Sprites _sprites;
         private Vector2 _playerPosition;
+        private Dictionary<Vector2, int> _mg;
+        private Dictionary<Vector2, int> _collisions;
 
         private Dictionary<Vector2, int> _tilemap;
         private List<Rectangle> _textures;
@@ -41,7 +43,7 @@ namespace BulletGame
                 {
                     if (int.TryParse(items[x], out int value))
                     {
-                        if (value > 0)
+                        if (value > -1)
                         {
                             result[new Vector2(x, y)] = value;
                         }
@@ -67,6 +69,8 @@ namespace BulletGame
                 new Rectangle(0, 0, 16, 16),
                 new Rectangle(16, 0, 16, 16)
             };
+            _mg = LoadMap("../../../maps/levels/test_mg.csv");
+            _collisions = LoadMap("../../../maps/levels/test_collisions.csv");
         }
 
         protected override void Initialize()
@@ -88,10 +92,10 @@ namespace BulletGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            _textureatlas = Content.Load<Texture2D>("floorExamples");
+            _textureatlas = Content.Load<Texture2D>("GroundTextures-Sheet");
             //_song = Content.Load<Song>("audio");
             //MediaPlayer.Play(_song);
-            _player.LoadContent(Content);
+            _player.LoadContent(Content, GraphicsDevice);
             _menuManager.LoadContent(Content);
             _mainMenu.LoadContent(Content);
             _goldScore.LoadContent(Content);
@@ -146,14 +150,14 @@ namespace BulletGame
             {
                 _spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null,
                     transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.position, 0)));
-                foreach (var item in _tilemap)
+                int tiles = 32;
+                foreach (var item in _mg)
                 {
                     Rectangle dest = new((int)item.Key.X * 64, (int)item.Key.Y * 64, 64, 64);
-                    if (item.Value > 0 && item.Value <= _textures.Count)
-                    {
-                        Rectangle src = _textures[item.Value - 1];
-                        _spriteBatch.Draw(_textureatlas, dest, src, Color.White);
-                    }
+                    int x = item.Value % tiles;
+                    int y = item.Value / tiles;
+                    Rectangle src = new(x * tiles, y * tiles, tiles, tiles);
+                    _spriteBatch.Draw(_textureatlas, dest, src, Color.White);
                 }
                 _player.Draw(_spriteBatch);
                 _spriteBatch.End();

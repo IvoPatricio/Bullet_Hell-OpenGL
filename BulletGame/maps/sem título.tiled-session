@@ -1,0 +1,41 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+        ".",
+        "tilesets"
+    ],
+    "fileStates": {
+        "tilesets/CollisionTexture-Sheet.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tilesets/FloorTles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tilesets/GroundTextures-Sheet.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/ivopa/Desktop/bullet_game/BulletGame/maps/levels",
+    "last.imagePath": "C:/Users/ivopa/Downloads",
+    "map.height": 50,
+    "map.lastUsedExportFilter": "Ficheiros CSV (*.csv)",
+    "map.width": 50,
+    "openFiles": [
+        "tilesets/GroundTextures-Sheet.tsx",
+        "tilesets/CollisionTexture-Sheet.tsx"
+    ],
+    "project": "sem título.tiled-project",
+    "recentFiles": [
+        "tilesets/CollisionTexture-Sheet.tsx",
+        "tilesets/GroundTextures-Sheet.tsx",
+        "tilesets/FloorTles.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

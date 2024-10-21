@@ -23,24 +23,38 @@ namespace BulletGame
         private int _currentFrameWalk = 0;
         private int _currentFrameIdle = 0;
         private double _timeSinceLastFrame = 0;
-        private double _frameTime = 0.1;
+        private double _frameTime = 0.15;
+        private int _health = 100;
+        private int _hitboxHeight;
+        private int _hitboxWidth;
+        private int _hitboxOffsetY;
+        private int _hitboxOffsetX;
         private bool _idleCheck = true;
         private Sprites _sprites;
         private Direction _currentDirection = Direction.Down;
         public Vector2 _position { get; private set; }
         private Texture2D _playerWalkTexture2D;
         private Texture2D _playerIdleTexture2D;
+        private Texture2D _hitboxTexture;
 
         public Player(Vector2 startPosition, Sprites _sprites)
         {
             this._position = startPosition;
             this._sprites = _sprites;
+
+            //HITBOX Values
+            this._hitboxHeight = 52;
+            this. _hitboxWidth = 32;
+            this._hitboxOffsetY = ((64 - _hitboxHeight) / 2) + 4;
+            this._hitboxOffsetX = (64 - _hitboxWidth) / 2;
         }
 
-        public virtual void LoadContent(ContentManager content)
+        public virtual void LoadContent(ContentManager content, GraphicsDevice GraphicsDevice)
         {
             _playerWalkTexture2D = content.Load<Texture2D>("PlayerWalkSheat");
             _playerIdleTexture2D = content.Load<Texture2D>("PlayerIdleSheat");
+            _hitboxTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _hitboxTexture.SetData(new[] { Color.White });
         }
         public virtual Vector2 Update(GameTime gameTime)
         {
@@ -105,7 +119,14 @@ namespace BulletGame
                 Direction.Up => 1,
                 Direction.Right => 2,
                 Direction.Left => 3,
+                _=> 0
             };
+            DrawPlayerTexture(spriteBatch, row);
+            DrawPlayerHitbox(spriteBatch, row);
+        }
+
+        void DrawPlayerTexture(SpriteBatch spriteBatch, int row)
+        {
             if (_idleCheck == false)
             {
                 Rectangle src = new Rectangle(_currentFrameWalk * 32, row * 32, 32, 32);
@@ -117,7 +138,42 @@ namespace BulletGame
                 _sprites.Draw(spriteBatch, _playerIdleTexture2D, _position, src, 1);
             }
         }
+
+        void DrawPlayerHealth(SpriteBatch spriteBatch)
+        {
+            
+        }
+        void DrawPlayerHitbox(SpriteBatch spriteBatch, int row)
+        {
+            this. _hitboxWidth = 32;
+            this._hitboxOffsetX = (64 - _hitboxWidth) / 2;
+            if (row == 2 || row == 3) //Looking RIGHT or LEFT
+            {
+                _hitboxWidth = 28;
+                _hitboxOffsetX = (64 - _hitboxWidth) / 2;
+                if (row == 2)
+                {
+                    _hitboxOffsetX -= 2;
+                }
+                else
+                {
+                    _hitboxOffsetX += 4;
+                }
+            }
+            Rectangle hitbox = new Rectangle((int)_position.X + _hitboxOffsetX, (int)_position.Y + _hitboxOffsetY, _hitboxWidth, _hitboxHeight);
+            DrawRectangle(spriteBatch, hitbox, Color.Red);
+        }
+        void DrawRectangle(SpriteBatch spriteBatch, Rectangle hitbox, Color color)
+        {
+            //UP & DOWN
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Left, hitbox.Top, hitbox.Width, 2), color);
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Left, hitbox.Bottom - 2, hitbox.Width, 2), color);
+            //LEFT & RIGHT
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Left, hitbox.Top, 2, hitbox.Height), color);
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Right - 2, hitbox.Top, 2, hitbox.Height), color);
+        }
     }
+
 
 /*    public class Warrior : Player
     {

@@ -36,11 +36,13 @@ namespace BulletGame
         private Texture2D _playerWalkTexture2D;
         private Texture2D _playerIdleTexture2D;
         private Texture2D _hitboxTexture;
-
-        public Player(Vector2 startPosition, Sprites _sprites)
+        private readonly Dictionary<Vector2, int> _collisions;
+        private Rectangle _hitbox;
+        public Player(Vector2 startPosition, Sprites sprites, Dictionary<Vector2, int> collisions)
         {
+            this._collisions = collisions;
             this._position = startPosition;
-            this._sprites = _sprites;
+            this._sprites = sprites;
 
             //HITBOX Values
             this._hitboxHeight = 52;
@@ -60,7 +62,6 @@ namespace BulletGame
         {
             Vector2 movement = Vector2.Zero;
             KeyboardState keystate = Keyboard.GetState();
-
             if (keystate.IsKeyDown(Keys.Right))
             {
                 movement.X += 1;
@@ -93,22 +94,91 @@ namespace BulletGame
             {
                 movement.Normalize();
                 movement *= 5;
-                _position += movement;
+                Vector2 newPosition = _position;
+                newPosition.X += movement.X;
+                CheckPlayerHitBox(newPosition);
+                if (!CheckCollision())
+                {
+                    _position = newPosition;
+                }
+                else
+                {
+                    if (_currentDirection == Direction.Right)
+                    {
+                        _position = new Vector2(newPosition.X - 14, _position.Y);
+                    }
+                    else if (_currentDirection == Direction.Left)
+                    {
+                        _position = new Vector2(newPosition.X + 14, _position.Y);
+                    }
+                    Console.WriteLine("Collision detected - X AXIS");
+                }
+                newPosition.Y += movement.Y;
+                CheckPlayerHitBox(newPosition);
+                if (!CheckCollision())
+                {
+                    _position = newPosition;
+                }
+                else
+                {
+                    Console.WriteLine("Collision detected- Y AXIS");
+                }
             }
             _timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
             if (_timeSinceLastFrame >= _frameTime && _idleCheck != true)
             {
                 _currentFrameWalk = (_currentFrameWalk + 1) % 4;
-                _timeSinceLastFrame = 0;
                 _currentFrameIdle = 0;
+                _timeSinceLastFrame = 0;
             }
             else if (_timeSinceLastFrame >= _frameTime && _idleCheck == true)
             {
                 _currentFrameIdle = (_currentFrameIdle + 1) % 2;
-                _timeSinceLastFrame = 0;
                 _currentFrameWalk = 0;
+                _timeSinceLastFrame = 0;
             }
+            UpdatePlayerHitbox();
             return _position;
+        }
+        void CheckPlayerHitBox(Vector2 HitboxCheck)
+        {
+            _hitboxWidth = 32;
+            _hitboxOffsetX = (64 - _hitboxWidth) / 2;
+            if (_currentDirection == Direction.Right || _currentDirection == Direction.Left) //Looking RIGHT or LEFT
+            {
+                _hitboxWidth = 28;
+                _hitboxOffsetX = (64 - _hitboxWidth) / 2;
+                if (_currentDirection == Direction.Right)
+                {
+                    _hitboxOffsetX -= 2;
+                }
+                else
+                {
+                    _hitboxOffsetX += 4;
+                }
+            }
+            _hitbox = new Rectangle((int)HitboxCheck.X + _hitboxOffsetX, (int)HitboxCheck.Y + _hitboxOffsetY, _hitboxWidth, _hitboxHeight);
+        }
+
+        
+        void UpdatePlayerHitbox()
+        {
+            _hitboxWidth = 32;
+            _hitboxOffsetX = (64 - _hitboxWidth) / 2;
+            if (_currentDirection == Direction.Right || _currentDirection == Direction.Left) //Looking RIGHT or LEFT
+            {
+                _hitboxWidth = 28;
+                _hitboxOffsetX = (64 - _hitboxWidth) / 2;
+                if (_currentDirection == Direction.Right)
+                {
+                    _hitboxOffsetX -= 2;
+                }
+                else
+                {
+                    _hitboxOffsetX += 4;
+                }
+            }
+            _hitbox = new Rectangle((int)_position.X + _hitboxOffsetX, (int)_position.Y + _hitboxOffsetY, _hitboxWidth, _hitboxHeight);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -122,7 +192,7 @@ namespace BulletGame
                 _=> 0
             };
             DrawPlayerTexture(spriteBatch, row);
-            DrawPlayerHitbox(spriteBatch, row);
+            DrawPlayerHitbox(spriteBatch);
         }
 
         void DrawPlayerTexture(SpriteBatch spriteBatch, int row)
@@ -138,39 +208,36 @@ namespace BulletGame
                 _sprites.Draw(spriteBatch, _playerIdleTexture2D, _position, src, 1);
             }
         }
-
-        void DrawPlayerHealth(SpriteBatch spriteBatch)
-        {
-            
-        }
-        void DrawPlayerHitbox(SpriteBatch spriteBatch, int row)
-        {
-            this. _hitboxWidth = 32;
-            this._hitboxOffsetX = (64 - _hitboxWidth) / 2;
-            if (row == 2 || row == 3) //Looking RIGHT or LEFT
-            {
-                _hitboxWidth = 28;
-                _hitboxOffsetX = (64 - _hitboxWidth) / 2;
-                if (row == 2)
-                {
-                    _hitboxOffsetX -= 2;
-                }
-                else
-                {
-                    _hitboxOffsetX += 4;
-                }
-            }
-            Rectangle hitbox = new Rectangle((int)_position.X + _hitboxOffsetX, (int)_position.Y + _hitboxOffsetY, _hitboxWidth, _hitboxHeight);
-            DrawRectangle(spriteBatch, hitbox, Color.Red);
-        }
-        void DrawRectangle(SpriteBatch spriteBatch, Rectangle hitbox, Color color)
+        void DrawPlayerHitbox(SpriteBatch spriteBatch)
         {
             //UP & DOWN
-            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Left, hitbox.Top, hitbox.Width, 2), color);
-            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Left, hitbox.Bottom - 2, hitbox.Width, 2), color);
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(_hitbox.Left, _hitbox.Top, _hitbox.Width, 2), Color.Red);
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(_hitbox.Left, _hitbox.Bottom - 2, _hitbox.Width, 2), Color.Red);
             //LEFT & RIGHT
-            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Left, hitbox.Top, 2, hitbox.Height), color);
-            spriteBatch.Draw(_hitboxTexture, new Rectangle(hitbox.Right - 2, hitbox.Top, 2, hitbox.Height), color);
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(_hitbox.Left, _hitbox.Top, 2, _hitbox.Height), Color.Red);
+            spriteBatch.Draw(_hitboxTexture, new Rectangle(_hitbox.Right - 2, _hitbox.Top, 2, _hitbox.Height), Color.Red);
+        }
+        void DrawPlayerHealth(SpriteBatch spriteBatch)
+        {
+            ;
+        }
+
+        private bool CheckCollision()
+        {
+            foreach (var tile in _collisions)
+            {
+                Vector2 col_position = tile.Key;
+                int value = tile.Value;
+                if (tile.Value == -1)
+                {
+                    Rectangle dest = new Rectangle((int)col_position.X * 64, (int)col_position.Y * 64, 64, 64);
+                    if (_hitbox.Intersects(dest))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 

@@ -22,11 +22,8 @@ namespace BulletGame
         private Camera _camera;
         private Sprites _sprites;
         private Vector2 _playerPosition;
-        private Dictionary<Vector2, int> _mg;
-        private Dictionary<Vector2, int> _collisions;
-
-        private Dictionary<Vector2, int> _tilemap;
-        private List<Rectangle> _textures;
+        private readonly Dictionary<Vector2, int> _mg;
+        private readonly Dictionary<Vector2, int> _collisions;
 
         string _GameState;
 
@@ -43,7 +40,7 @@ namespace BulletGame
                 {
                     if (int.TryParse(items[x], out int value))
                     {
-                        if (value > -1)
+                        if (value >= -1)
                         {
                             result[new Vector2(x, y)] = value;
                         }
@@ -62,15 +59,10 @@ namespace BulletGame
             _graphics.PreferredBackBufferHeight = 720;
             //_graphics.IsFullScreen = true;
             this.Window.Title = "Dodge Restarter";
-            this._playerPosition = Vector2.Zero;
+            this._playerPosition = new Vector2(2 * 64, 3 * 64);
             IsMouseVisible = true;
-            _tilemap = LoadMap("../../../maps/map1.csv");
-            _textures = new List<Rectangle>() {
-                new Rectangle(0, 0, 16, 16),
-                new Rectangle(16, 0, 16, 16)
-            };
-            _mg = LoadMap("../../../maps/levels/test_mg.csv");
-            _collisions = LoadMap("../../../maps/levels/test_collisions.csv");
+            _mg = LoadMap("../../../maps/levels/testing_mg.csv");
+            _collisions = LoadMap("../../../maps/levels/testing_collisions.csv");
         }
 
         protected override void Initialize()
@@ -82,7 +74,7 @@ namespace BulletGame
             _menuManager = new MenuManager();
             _mainMenu = new();
             _goldScore = new GoldScore();
-            _player = new Player(_playerPosition, _sprites);
+            _player = new Player(_playerPosition, _sprites, _collisions);
             _camera = new(_playerPosition);
             base.Initialize();
         }

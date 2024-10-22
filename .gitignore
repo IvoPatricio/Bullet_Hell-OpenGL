@@ -1,0 +1,20 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userprefs
+
+# Build output directories
+bin/
+obj/
+
+# Temporary files
+*.tmp
+*.log
+
+# Environment variables
+.env
+
+# Thumbnails and Cache
+Thumbs.db
+.DS_Store

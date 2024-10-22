@@ -24,7 +24,8 @@ namespace BulletGame
         private int _currentFrameIdle = 0;
         private double _timeSinceLastFrame = 0;
         private double _frameTime = 0.15;
-        private int _health = 100;
+        private int _maxHealth = 100;
+        private int _health;
         private int _hitboxHeight;
         private int _hitboxWidth;
         private int _hitboxOffsetY;
@@ -43,6 +44,7 @@ namespace BulletGame
             this._collisions = collisions;
             this._position = startPosition;
             this._sprites = sprites;
+            this._health = _maxHealth;
 
             //HITBOX Values
             this._hitboxHeight = 52;

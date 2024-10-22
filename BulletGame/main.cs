@@ -14,7 +14,6 @@ namespace BulletGame
         Song _song;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private MenuManager _menuManager;
         private MainMenu _mainMenu;
         private GameEngine _gameEngine;
         string _GameState;
@@ -36,7 +35,6 @@ namespace BulletGame
             // TODO: Add your initialization logic here
             _graphics.ApplyChanges();
             _GameState = "Main Menu";
-            _menuManager = new MenuManager();
             _mainMenu = new();
             _gameEngine = new GameEngine();
             base.Initialize();
@@ -49,7 +47,6 @@ namespace BulletGame
             // TODO: use this.Content to load your game content here
             //_song = Content.Load<Song>("audio");
             //MediaPlayer.Play(_song);
-            _menuManager.LoadContent(Content);
             _mainMenu.LoadContent(Content);
             _gameEngine.LoadContent(Content, GraphicsDevice);
         }

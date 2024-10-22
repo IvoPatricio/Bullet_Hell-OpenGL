@@ -1,8 +1,7 @@
-# Visual Studio files
-.vs/
-*.suo
-*.user
-*.userprefs
+# Visual Studio files and cache
+.vscode/
+Thumbs.db
+.DS_Store
 
 # Build output directories
 bin/
@@ -14,7 +13,3 @@ obj/
 
 # Environment variables
 .env
-
-# Thumbnails and Cache
-Thumbs.db
-.DS_Store

@@ -15,7 +15,7 @@ namespace BulletGame
         private readonly Dictionary<Vector2, int> _mg;
         public Map()
         {
-            _mg = LoadMap("../../../maps/levels/testing_mg.csv");
+            this._mg = LoadMap("../../../maps/levels/testing_mg.csv");
         }
         public void LoadContent(ContentManager content)
         {

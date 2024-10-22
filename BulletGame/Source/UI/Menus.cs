@@ -11,19 +11,40 @@ namespace BulletGame
 {
     public class MenuManager
     {
+        private static MenuManager _instance;
         protected Texture2D _MainBackgroundTexture2D;
         protected Texture2D _PauseBackgroundTexture2D;
         protected SpriteFont _font;
         protected KeyboardState _previousKeyState;
         protected MouseState _previousMouseState;
+        protected bool _contentLoaded = false;
         protected int _menuIndex;
 
+        protected MenuManager()
+        {
+            // Private(Protected) constructor
+        }
+
+        private MenuManager(MenuManager other)
+        {
+            // Private copy constructor
+        }
+
+        public static MenuManager GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new MenuManager();
+            }
+            return _instance;
+        }
         public virtual void LoadContent(ContentManager content)
         {
             _MainBackgroundTexture2D = content.Load<Texture2D>("MainBackground");
             _PauseBackgroundTexture2D = content.Load<Texture2D>("PauseBackground");
             _font = content.Load<SpriteFont>("menuFont");
             _menuIndex = 0;
+            _contentLoaded = true;
         }
     }
     public class MainMenu : MenuManager
@@ -31,17 +52,14 @@ namespace BulletGame
         private string[] _menuItems = {"Start", "Settings", "Credits", "Quit", "Help"};
         private List<Vector2> _menuPositions = new List<Vector2>();
 
-        public MainMenu()
-        {
-            ;
-        }
         ~MainMenu()
         {
             ;
         }
         public override void LoadContent(ContentManager content)
         {
-            base.LoadContent(content);
+            if (_contentLoaded == false)
+                base.LoadContent(content);
             int startY = (720 - (_menuItems.Length * 40)) / 2;
             for (int i = 0; i < _menuItems.Length; i++)
             {

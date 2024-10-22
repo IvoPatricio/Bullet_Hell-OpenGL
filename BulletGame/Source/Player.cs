@@ -60,6 +60,15 @@ namespace BulletGame
         }
         public virtual Vector2 Update(GameTime gameTime)
         {
+            Vector2 movement = UpdatePlayerMovementDirection();
+            UpdatePlayerMovementAndCollision(movement);
+            UpdatePlayerAnimation(gameTime);
+            UpdatePlayerHitbox();
+            return _position;
+        }
+
+        private Vector2 UpdatePlayerMovementDirection()
+        {
             Vector2 movement = Vector2.Zero;
             KeyboardState keystate = Keyboard.GetState();
             if (keystate.IsKeyDown(Keys.Right))
@@ -90,6 +99,11 @@ namespace BulletGame
             {
                 _idleCheck = false;
             }
+            return movement;
+        }
+
+        void UpdatePlayerMovementAndCollision(Vector2 movement)
+        {
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
@@ -97,7 +111,7 @@ namespace BulletGame
                 Vector2 newPosition = _position;
                 newPosition.X += movement.X;
                 CheckPlayerHitBox(newPosition);
-                if (!CheckCollision())
+                if (CheckPlayerMapCollision() == false)
                 {
                     _position = newPosition;
                 }
@@ -115,7 +129,7 @@ namespace BulletGame
                 }
                 newPosition.Y += movement.Y;
                 CheckPlayerHitBox(newPosition);
-                if (!CheckCollision())
+                if (CheckPlayerMapCollision() == false)
                 {
                     _position = newPosition;
                 }
@@ -124,22 +138,28 @@ namespace BulletGame
                     Console.WriteLine("Collision detected- Y AXIS");
                 }
             }
-            _timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timeSinceLastFrame >= _frameTime && _idleCheck != true)
-            {
-                _currentFrameWalk = (_currentFrameWalk + 1) % 4;
-                _currentFrameIdle = 0;
-                _timeSinceLastFrame = 0;
-            }
-            else if (_timeSinceLastFrame >= _frameTime && _idleCheck == true)
-            {
-                _currentFrameIdle = (_currentFrameIdle + 1) % 2;
-                _currentFrameWalk = 0;
-                _timeSinceLastFrame = 0;
-            }
-            UpdatePlayerHitbox();
-            return _position;
         }
+
+        void UpdatePlayerAnimation(GameTime gameTime)
+        {
+            _timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
+            if (_timeSinceLastFrame >= _frameTime)
+            {
+                if (_idleCheck == false)
+                {
+                    _currentFrameWalk = (_currentFrameWalk + 1) % 4;
+                    _currentFrameIdle = 0;
+                    _timeSinceLastFrame = 0;
+                }
+                else
+                {
+                    _currentFrameIdle = (_currentFrameIdle + 1) % 2;
+                    _currentFrameWalk = 0;
+                    _timeSinceLastFrame = 0;
+                }
+            }
+        }
+
         void CheckPlayerHitBox(Vector2 HitboxCheck)
         {
             _hitboxWidth = 32;
@@ -159,7 +179,6 @@ namespace BulletGame
             }
             _hitbox = new Rectangle((int)HitboxCheck.X + _hitboxOffsetX, (int)HitboxCheck.Y + _hitboxOffsetY, _hitboxWidth, _hitboxHeight);
         }
-
         
         void UpdatePlayerHitbox()
         {
@@ -181,7 +200,32 @@ namespace BulletGame
             _hitbox = new Rectangle((int)_position.X + _hitboxOffsetX, (int)_position.Y + _hitboxOffsetY, _hitboxWidth, _hitboxHeight);
         }
 
+        private bool CheckPlayerMapCollision()
+        {
+            foreach (var tile in _collisions)
+            {
+                Vector2 col_position = tile.Key;
+                int value = tile.Value;
+                if (tile.Value == -1)
+                {
+                    Rectangle dest = new Rectangle((int)col_position.X * 64, (int)col_position.Y * 64, 64, 64);
+                    if (_hitbox.Intersects(dest))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
+        {
+            int row = GetPlayerSpriteRowByDirection();
+            DrawPlayerWalkingIdleTextures(spriteBatch, row);
+            DrawPlayerHitbox(spriteBatch);
+        }
+
+        int GetPlayerSpriteRowByDirection()
         {
             int row = _currentDirection switch
             {
@@ -191,11 +235,10 @@ namespace BulletGame
                 Direction.Left => 3,
                 _=> 0
             };
-            DrawPlayerTexture(spriteBatch, row);
-            DrawPlayerHitbox(spriteBatch);
+            return row;
         }
 
-        void DrawPlayerTexture(SpriteBatch spriteBatch, int row)
+        void DrawPlayerWalkingIdleTextures(SpriteBatch spriteBatch, int row)
         {
             if (_idleCheck == false)
             {
@@ -220,24 +263,6 @@ namespace BulletGame
         void DrawPlayerHealth(SpriteBatch spriteBatch)
         {
             ;
-        }
-
-        private bool CheckCollision()
-        {
-            foreach (var tile in _collisions)
-            {
-                Vector2 col_position = tile.Key;
-                int value = tile.Value;
-                if (tile.Value == -1)
-                {
-                    Rectangle dest = new Rectangle((int)col_position.X * 64, (int)col_position.Y * 64, 64, 64);
-                    if (_hitbox.Intersects(dest))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 

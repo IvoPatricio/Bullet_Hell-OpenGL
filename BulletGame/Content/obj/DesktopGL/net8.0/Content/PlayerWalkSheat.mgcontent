@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/Walk.png</SourceFile>
-  <SourceTime>2023-05-16T19:12:52+01:00</SourceTime>
+  <SourceTime>2024-10-22T15:06:03.8291965+01:00</SourceTime>
   <DestFile>C:/Users/ivopa/Desktop/bullet_game/BulletGame/Content/bin/DesktopGL/Content/PlayerWalkSheat.xnb</DestFile>
-  <DestTime>2024-10-19T16:18:50.8479527+01:00</DestTime>
+  <DestTime>2024-10-22T15:47:09.0513397+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T18:05:56+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

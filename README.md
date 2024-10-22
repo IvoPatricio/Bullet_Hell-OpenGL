@@ -17,3 +17,5 @@
 - Framework: .NET
 - Game Framework: MonoGame
 - Graphics API: OpenGL
+- Cloud Technology: Supabase (AWS)
+- Pixel Art Software: Aseprite
